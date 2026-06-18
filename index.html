@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gra Terenowa - v5.1 (Poprawka Układu)</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #d35400;
+            --bg-color: #f4f6f7;
+            --text-color: #34495e;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 10px;
+            position: relative;
+        }
+
+        .header-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+        }
+
+        #live-timer {
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-family: monospace;
+            font-weight: bold;
+            display: none;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            text-align: justify;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #bdc3c7;
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent-color);
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+        }
+
+        button.accent {
+            background-color: var(--accent-color);
+        }
+
+        button.download-btn {
+            background-color: #27ae60;
+            font-size: 1.1rem;
+            padding: 16px;
+        }
+
+        .error {
+            color: #c0392b;
+            font-size: 0.85rem;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            display: none;
+            font-weight: bold;
+        }
+
+        #camera-section {
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .image-preview {
+            width: 100%;
+            max-height: 220px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 2px dashed #bdc3c7;
+            display: none;
+            margin-top: 15px;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .map-status {
+            background: #e8ecef;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .status-dot {
+            color: #7f8c8d;
+        }
+        .status-dot.done {
+            color: #27ae60;
+        }
+
+        .screenshot-box {
+            background-color: #ffffff;
+            border: 3px dashed #27ae60;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .screenshot-box h3 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #27ae60;
+            font-size: 1.1rem;
+        }
+
+        .result-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 1rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        #watermark-canvas {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header-area">
+            <h1>Orle Gniazda</h1>
+            <div id="live-timer">00:00:00</div>
+        </div>
+
+        <div id="step-1" class="step active">
+            <h2>Witaj na starcie!</h2>
+            <p>Czas rywalizacji ruszy automatycznie po wpisaniu nazwy zespołu i kliknięciu przycisku.</p>
+            
+            <div class="input-group">
+                <label for="team-name">Nazwa Drużyny:</label>
+                <input type="text" id="team-name" placeholder="Wpisz nazwę zespołu...">
+            </div>
+            <div id="error-1" class="error">Proszę podać nazwę drużyny!</div>
+            
+            <button onclick="startGame()">Uruchom stoper i zacznij</button>
+        </div>
+
+        <div id="step-2" class="step">
+            <div class="map-status">
+                <span>Format: Szyfr</span>
+                <span class="status-dot done">● Start</span>
+                <span class="status-dot">○ Okiennik</span>
+                <span class="status-dot">○ Mirów</span>
+            </div>
+            <h2>Punkt 1: Okiennik Wielki</h2>
+            <p>Ruszajcie w stronę Okiennika Wielkiego. Odszukajcie rozwiązanie zagadki ukrytej w architekturze lub naturze tego miejsca.</p>
+            
+            <div class="input-group">
+                <label for="code-stage-1">Wpisz kod z terenu:</label>
+                <input type="text" id="code-stage-1" placeholder="Wpisz rozwiązanie (test: KOD1)">
+            </div>
+            <div id="error-2" class="error">Błędna odpowiedź! Rozejrzyjcie się uważnie.</div>
+            
+            <button onclick="checkStage1()" class="accent">Odblokuj kolejny etap</button>
+        </div>
+
+        <div id="step-3" class="step">
+            <div class="map-status">
+                <span>Format: Szyfr</span>
+                <span class="status-dot done">● Start</span>
+                <span class="status-dot done">● Okiennik</span>
+                <span class="status-dot">○ Mirów</span>
+            </div>
+            <h2>Punkt 2: Finał – Zamek w Mirowie</h2>
+            <p>Dotrzyjcie pod mury zamku. Rozwiążcie finałową zagadkę oraz zróbcie pamiątkowe zdjęcie grupy, aby zatrzymać licznik.</p>
+            
+            <div class="input-group">
+                <label for="code-stage-2">Wpisz kod finałowy:</label>
+                <input type="text" id="code-stage-2" placeholder="Wpisz rozwiązanie (test: KOD2)">
+            </div>
+            <div id="error-3-code" class="error">Kod zamkowy jest niepoprawny!</div>
+
+            <div id="camera-section">
+                <div class="file-input-wrapper">
+                    <button type="button" class="accent">Zrób Zdjęcie Grupy</button>
+                    <input type="file" id="photo-capture" accept="image/*" capture="environment" onchange="previewPhoto(event)">
+                </div>
+                <img id="image-preview" class="image-preview" alt="Podgląd zdjęcia">
+            </div>
+            <div id="error-3-photo" class="error">Wymagane jest załączenie zdjęcia grupy!</div>
+
+            <button onclick="finishGame()">Zatrzymaj czas i sprawdź wynik</button>
+        </div>
+
+        <div id="step-4" class="step">
+            <h2>Gra Ukończona! 🎉</h2>
+            
+            <div class="screenshot-box">
+                <h3>OFICJALNY WYNIK GRA TERENOWA</h3>
+                <div class="result-line">
+                    <strong>Drużyna:</strong>
+                    <span id="summary-team-name" style="font-weight: bold; color: var(--accent-color);">-</span>
+                </div>
+                <div class="result-line">
+                    <strong>Czas rywalizacji:</strong>
+                    <span id="final-time" style="font-weight: bold; color: #27ae60;">-</span>
+                </div>
+                <div class="result-line">
+                    <strong>Wydarzenie:</strong>
+                    <span style="font-weight: bold;">Sandvik MEU PL2 29.06.2026</span>
+                </div>
+            </div>
+
+            <p style="font-size: 0.9rem; margin-bottom: 15px; text-align: center; color: #7f8c8d;">
+                Jeśli poniższy przycisk pobierania nie zadziała na Twoim telefonie, zrób **zrzut ekranu** powyższej ramki i pokaż go koordynatorowi!
+            </p>
+            
+            <button onclick="downloadWatermarkedImage()" id="download-btn-el" class="download-btn" style="display:none;">💾 Pobierz Zdjęcie z Wynikiem</button>
+
+            <div id="preview-box-el" style="display:none;" class="screenshot-box">
+                <h3>PODGLĄD PAMIĄTKI:</h3>
+                <img id="final-watermarked-preview" class="image-preview" style="display:block; border: 1px solid #ccc; max-height: 250px;" alt="Zdjęcie z wynikami">
+            </div>
+            
+            <button onclick="restartGame()" style="background-color: #7f8c8d; margin-top: 15px;">Resetuj aplikację (Kolejna grupa)</button>
+        </div>
+    </div>
+
+    <canvas id="watermark-canvas"></canvas>
+
+    <script>
+        const ANSWER_1 = "KOD1"; 
+        const ANSWER_2 = "KOD2"; 
+        const WATERMARK_HEADER = "Sandvik MEU PL2"; 
+        const WATERMARK_DATE = "29.06.2026";
+        
+        let timerInterval = null;
+        let tempPhotoData = null; 
+
+        window.onload = function() {
+            if (localStorage.getItem('teamName')) {
+                if (localStorage.getItem('gameState') === '4') {
+                    restartGame();
+                } else {
+                    const savedStep = localStorage.getItem('gameState') || '2';
+                    document.getElementById('team-name').value = localStorage.getItem('teamName');
+                    document.getElementById('code-stage-1').value = localStorage.getItem('code1') || '';
+                    startTimer();
+                    showStep(savedStep);
+                }
+            }
+        }
+
+        function showStep(stepNumber) {
+            document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+            document.getElementById(`step-${stepNumber}`).classList.add('active');
+            localStorage.setItem('gameState', stepNumber);
+            window.scrollTo(0, 0);
+        }
+
+        function updateTimerDisplay() {
+            const startTime = parseInt(localStorage.getItem('startTime') || 0);
+            if (startTime === 0) return;
+            
+            const now = new Date().getTime();
+            const diff = now - startTime;
+            
+            const totalSec = Math.floor(diff / 1000);
+            const hrs = Math.floor(totalSec / 3600);
+            const mins = Math.floor((totalSec % 3600) / 60);
+            const secs = totalSec % 60;
+            
+            const timeStr = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            document.getElementById('live-timer').innerText = timeStr;
+            return timeStr;
+        }
+
+        function startTimer() {
+            document.getElementById('live-timer').style.display = 'block';
+            updateTimerDisplay();
+            timerInterval = setInterval(updateTimerDisplay, 1000);
+        }
+
+        function startGame() {
+            const nameInput = document.getElementById('team-name').value.trim();
+            const error = document.getElementById('error-1');
+            
+            if (nameInput === "") {
+                error.style.display = "block";
+            } else {
+                error.style.display = "none";
+                localStorage.setItem('teamName', nameInput);
+                localStorage.setItem('startTime', new Date().getTime().toString());
+                startTimer();
+                showStep(2);
+            }
+        }
+
+        function checkStage1() {
+            const inputVal = document.getElementById('code-stage-1').value.trim().toUpperCase();
+            const error = document.getElementById('error-2');
+            
+            if (inputVal === ANSWER_1) {
+                error.style.display = "none";
+                localStorage.setItem('code1', inputVal);
+                showStep(3);
+            } else {
+                error.style.display = "block";
+            }
+        }
+
+        function previewPhoto(event) {
+            const input = event.target;
+            const preview = document.getElementById('image-preview');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = "block";
+                    document.getElementById('error-3-photo').style.display = "none";
+                    tempPhotoData = e.target.result; 
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function finishGame() {
+            const codeInput = document.getElementById('code-stage-2').value.trim().toUpperCase();
+            const photoInput = document.getElementById('photo-capture');
+            
+            const errorCode = document.getElementById('error-3-code');
+            const errorPhoto = document.getElementById('error-3-photo');
+
+            let isValid = true;
+
+            if (codeInput !== ANSWER_2) {
+                errorCode.style.display = "block";
+                isValid = false;
+            } else {
+                errorCode.style.display = "none";
+            }
+
+            if (!tempPhotoData && (!photoInput.files || photoInput.files.length === 0)) {
+                errorPhoto.style.display = "block";
+                isValid = false;
+            } else {
+                errorPhoto.style.display = "none";
+            }
+
+            if (isValid) {
+                clearInterval(timerInterval);
+                const finalTimeStr = updateTimerDisplay();
+                document.getElementById('live-timer').style.display = 'none';
+                
+                document.getElementById('summary-team-name').innerText = localStorage.getItem('teamName') || "Drużyna";
+                document.getElementById('final-time').innerText = finalTimeStr;
+
+                let backupTimeout = setTimeout(() => {
+                    showStep(4);
+                }, 400);
+                
+                try {
+                    generateWatermarkedImage(finalTimeStr, () => {
+                        clearTimeout(backupTimeout); 
+                        showStep(4);
+                    });
+                } catch(e) {
+                    clearTimeout(backupTimeout);
+                    showStep(4);
+                }
+            }
+        }
+
+        function generateWatermarkedImage(timeStr, callback) {
+            if (!tempPhotoData) {
+                callback();
+                return;
+            }
+
+            const canvas = document.getElementById('watermark-canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            img.onload = function() {
+                let targetWidth = img.width;
+                let targetHeight = img.height;
+                if (targetWidth > 1400) {
+                    const ratio = 1400 / img.width;
+                    targetWidth = 1400;
+                    targetHeight = img.height * ratio;
+                }
+
+                canvas.width = targetWidth;
+                canvas.height = targetHeight;
+                
+                ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+                
+                // Nowy, nieco niższy pasek (zajmuje 14% zamiast 16%)
+                const barHeight = Math.floor(canvas.height * 0.14); 
+                ctx.fillStyle = "rgba(44, 62, 80, 0.85)";
+                ctx.fillRect(0, canvas.height - barHeight, canvas.width, barHeight);
+                
+                // ZMNIEJSZONE CZCIONKI DLA BEZPIECZEŃSTWA
+                const fontSizePrimary = Math.floor(barHeight * 0.24); // Mniejsza
+                const fontSizeTeam = Math.floor(barHeight * 0.22); // Mniejsza
+                const fontSizeTime = Math.floor(barHeight * 0.35); 
+                const paddingSide = Math.floor(canvas.width * 0.04);
+                
+                ctx.textBaseline = "middle";
+                
+                // --- LEWA STRONA (Układ piętrowy dla bezpieczeństwa) ---
+                ctx.textAlign = "left";
+                
+                // 1. Nazwa wydarzenia (Najwyżej)
+                ctx.fillStyle = "#ffffff";
+                ctx.font = `bold ${fontSizePrimary}px 'Segoe UI', Arial, sans-serif`;
+                ctx.fillText(WATERMARK_HEADER, paddingSide, canvas.height - (barHeight * 0.72));
+                
+                // 2. Nazwa Drużyny (Środek)
+                const currentTeam = localStorage.getItem('teamName') || "Bez nazwy";
+                ctx.fillStyle = "#d35400"; 
+                ctx.font = `bold ${fontSizeTeam}px 'Segoe UI', Arial, sans-serif`;
+                ctx.fillText(`Drużyna: ${currentTeam}`, paddingSide, canvas.height - (barHeight * 0.48));
+
+                // 3. Data (Najniżej)
+                ctx.fillStyle = "#bdc3c7"; // Szary, mniej widoczny
+                ctx.font = `${Math.floor(fontSizeTeam * 0.8)}px 'Segoe UI', Arial, sans-serif`;
+                ctx.fillText(WATERMARK_DATE, paddingSide, canvas.height - (barHeight * 0.25));
+                
+                // --- PRAWA STRONA ---
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#2ecc71"; // Czas zielony
+                ctx.font = `bold ${fontSizeTime}px monospace`;
+                
+                // Czas jest wycentrowany pionowo względem całego paska
+                ctx.fillText(timeStr, canvas.width - paddingSide, canvas.height - (barHeight * 0.5));
+                
+                const finalDataUrl = canvas.toDataURL('image/jpeg', 0.85); 
+                localStorage.setItem('finalWatermarkedPhoto', finalDataUrl);
+                
+                document.getElementById('final-watermarked-preview').src = finalDataUrl;
+                document.getElementById('download-btn-el').style.display = "block";
+                document.getElementById('preview-box-el').style.display = "block";
+                
+                callback();
+            };
+            
+            img.onerror = function() {
+                callback();
+            }
+            
+            img.src = tempPhotoData;
+        }
+
+        function downloadWatermarkedImage() {
+            const dataUrl = localStorage.getItem('finalWatermarkedPhoto');
+            if (!dataUrl) return;
+            
+            const team = (localStorage.getItem('teamName') || 'team').replace(/[^a-z0-9]/gi, '_').toLowerCase();
+            
+            const downloadLink = document.createElement('a');
+            downloadLink.href = dataUrl;
+            downloadLink.download = `wynik_${team}_sandvik.jpg`;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+
+        function restartGame() {
+            clearInterval(timerInterval);
+            localStorage.clear();
+            tempPhotoData = null;
+            
+            document.getElementById('team-name').value = "";
+            document.getElementById('code-stage-1').value = "";
+            document.getElementById('code-stage-2').value = "";
+            document.getElementById('photo-capture').value = "";
+            
+            document.getElementById('image-preview').style.display = "none";
+            document.getElementById('image-preview').src = "";
+            document.getElementById('final-watermarked-preview').src = "";
+            document.getElementById('download-btn-el').style.display = "none";
+            document.getElementById('preview-box-el').style.display = "none";
+            document.getElementById('live-timer').style.display = 'none';
+            
+            showStep(1);
+        }
+    </script>
+</body>
+</html>
