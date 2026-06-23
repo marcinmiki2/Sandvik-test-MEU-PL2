@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gra Terenowa - v5.1 (Poprawka Układu)</title>
+    <title>Gra Terenowa - Sandvik MEU PL2</title>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -53,7 +53,7 @@
 
         h1 {
             color: var(--primary-color);
-            font-size: 1.4rem;
+            font-size: 1.3rem;
         }
 
         #live-timer {
@@ -70,7 +70,7 @@
         h2 {
             color: var(--primary-color);
             margin-bottom: 15px;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
         }
 
         p {
@@ -98,7 +98,7 @@
             font-size: 0.9rem;
         }
 
-        input[type="text"] {
+        input[type="text"], input[type="number"] {
             width: 100%;
             padding: 12px;
             border: 2px solid #bdc3c7;
@@ -107,7 +107,7 @@
             outline: none;
         }
 
-        input[type="text"]:focus {
+        input[type="text"]:focus, input[type="number"]:focus {
             border-color: var(--accent-color);
         }
 
@@ -129,6 +129,13 @@
             background-color: var(--accent-color);
         }
 
+        button.audio-btn {
+            background-color: #3498db;
+            padding: 10px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
         button.download-btn {
             background-color: #27ae60;
             font-size: 1.1rem;
@@ -144,6 +151,17 @@
             font-weight: bold;
         }
 
+        .warning-box {
+            background-color: #f1c40f;
+            color: #2c3e50;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: none;
+        }
+
         #camera-section {
             margin: 15px 0;
             text-align: center;
@@ -151,7 +169,7 @@
 
         .image-preview {
             width: 100%;
-            max-height: 220px;
+            max-height: 250px;
             object-fit: cover;
             border-radius: 6px;
             border: 2px dashed #bdc3c7;
@@ -173,24 +191,6 @@
             top: 0;
             opacity: 0;
             cursor: pointer;
-        }
-
-        .map-status {
-            background: #e8ecef;
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .status-dot {
-            color: #7f8c8d;
-        }
-        .status-dot.done {
-            color: #27ae60;
         }
 
         .screenshot-box {
@@ -226,13 +226,14 @@
 
     <div class="container">
         <div class="header-area">
-            <h1>Orle Gniazda</h1>
+            <h1>Gra: Orle Gniazda</h1>
             <div id="live-timer">00:00:00</div>
         </div>
 
         <div id="step-1" class="step active">
             <h2>Witaj na starcie!</h2>
-            <p>Czas rywalizacji ruszy automatycznie po wpisaniu nazwy zespołu i kliknięciu przycisku.</p>
+            <p id="txt-1">Czas rywalizacji ruszy automatycznie po wpisaniu nazwy zespołu i kliknięciu przycisku START.</p>
+            <button onclick="playSpeech('txt-1')" class="audio-btn">🔊 Odsłuchaj lektora</button>
             
             <div class="input-group">
                 <label for="team-name">Nazwa Drużyny:</label>
@@ -240,57 +241,130 @@
             </div>
             <div id="error-1" class="error">Proszę podać nazwę drużyny!</div>
             
-            <button onclick="startGame()">Uruchom stoper i zacznij</button>
+            <button onclick="startGame()">START</button>
         </div>
 
         <div id="step-2" class="step">
-            <div class="map-status">
-                <span>Format: Szyfr</span>
-                <span class="status-dot done">● Start</span>
-                <span class="status-dot">○ Okiennik</span>
-                <span class="status-dot">○ Mirów</span>
-            </div>
-            <h2>Punkt 1: Okiennik Wielki</h2>
-            <p>Ruszajcie w stronę Okiennika Wielkiego. Odszukajcie rozwiązanie zagadki ukrytej w architekturze lub naturze tego miejsca.</p>
+            <h2>Punkt 1: Rozgrzewka</h2>
+            <p id="txt-2">Pytanie techniczne na rozgrzewkę: przyjrzyj się uważnie drzwiom restauracji hotelowej. Ile zawiasów (łącznie dużych i małych) trzyma to skrzydło?</p>
+            <button onclick="playSpeech('txt-2')" class="audio-btn">🔊 Odsłuchaj lektora</button>
             
             <div class="input-group">
-                <label for="code-stage-1">Wpisz kod z terenu:</label>
-                <input type="text" id="code-stage-1" placeholder="Wpisz rozwiązanie (test: KOD1)">
+                <label for="ans-2">Twoja odpowiedź:</label>
+                <input type="text" id="ans-2" placeholder="Wpisz cyfrę lub słowo...">
             </div>
-            <div id="error-2" class="error">Błędna odpowiedź! Rozejrzyjcie się uważnie.</div>
+            <div id="error-2" class="error">Niepoprawna liczba! Przyjrzyj się jeszcze raz uważnie.</div>
             
-            <button onclick="checkStage1()" class="accent">Odblokuj kolejny etap</button>
+            <button onclick="checkStep2()" class="accent">Zatwierdź odpowiedź</button>
         </div>
 
         <div id="step-3" class="step">
-            <div class="map-status">
-                <span>Format: Szyfr</span>
-                <span class="status-dot done">● Start</span>
-                <span class="status-dot done">● Okiennik</span>
-                <span class="status-dot">○ Mirów</span>
-            </div>
-            <h2>Punkt 2: Finał – Zamek w Mirowie</h2>
-            <p>Dotrzyjcie pod mury zamku. Rozwiążcie finałową zagadkę oraz zróbcie pamiątkowe zdjęcie grupy, aby zatrzymać licznik.</p>
+            <h2>Punkt 2: Wzgórze Zamkowe</h2>
+            <p id="txt-3">Podejdźcie do tablicy informacyjnej na wzgórzu Zamkowym. Przeczytajcie historię tego miejsca i podajcie: w którym roku Ludwik Węgierski nadał zamek Bobolice swojemu bratankowi Władysławowi Opolczykowi?</p>
+            <button onclick="playSpeech('txt-3')" class="audio-btn">🔊 Odsłuchaj lektora</button>
             
             <div class="input-group">
-                <label for="code-stage-2">Wpisz kod finałowy:</label>
-                <input type="text" id="code-stage-2" placeholder="Wpisz rozwiązanie (test: KOD2)">
+                <label for="ans-3">Wpisz rok:</label>
+                <input type="text" id="ans-3" placeholder="np. 1410">
             </div>
-            <div id="error-3-code" class="error">Kod zamkowy jest niepoprawny!</div>
+            <div id="error-3" class="error">Rok jest niepoprawny. Szukaj uważnie na tablicy historycznej!</div>
+            
+            <button onclick="checkStep3()" class="accent">Zatwierdź rok</button>
+        </div>
+
+        <div id="step-4" class="step">
+            <h2>Punkt 3: Brama Główna</h2>
+            <p id="txt-4">Gdy będziecie przed zamkiem, spójrzcie na kamienny herb zawieszony nad bramą główną. Wpiszcie, co jest głównym elementem tego herbu?</p>
+            <button onclick="playSpeech('txt-4')" class="audio-btn">🔊 Odsłuchaj lektora</button>
+            
+            <div class="input-group">
+                <label for="ans-4">Wpisz element herbu:</label>
+                <input type="text" id="ans-4" placeholder="Co widzisz na herbie...">
+            </div>
+            <div id="error-4" class="error">To nie to. Spójrz wyżej nad bramę główną!</div>
+            
+            <button onclick="checkStep4()" class="accent">Zatwierdź element</button>
+        </div>
+
+        <div id="step-5" class="step">
+            <h2>Punkt 4: Punkt Widokowy</h2>
+            <p id="txt-5">Obejdźcie zamek dookoła, kierujcie się na zachód. Idźcie w kierunku punktu widokowego z dwoma ławkami i dużą łąką. To piękny widok, idealny punkt na złapanie oddechu. Usiądźcie wygodnie, odpocznijcie chwilę podziwiając zamek w Bobolicach, a gdy będziecie gotowi – kliknijcie przycisk poniżej.</p>
+            <button onclick="playSpeech('txt-5')" class="audio-btn">🔊 Odsłuchaj lektora</button>
+            
+            <button onclick="showStep(6)">Odpoczęliśmy, idziemy dalej!</button>
+        </div>
+
+        <div id="step-6" class="step">
+            <h2>Punkt 5: Kierunek Ciemny Las</h2>
+            <p id="txt-6">Gdy już odpoczniesz na ławkach, kieruj się dalej w stronę ciemnego lasu. Na skraju lasu waszą uwagę przykuje biało-czerwona tablica ostrzegawcza. Wpisz przed czym dokładnie ostrzega ta tablica?</p>
+            <button onclick="playSpeech('txt-6')" class="audio-btn">🔊 Odsłuchaj lektora</button>
+            
+            <div class="input-group">
+                <label for="ans-6">Wpisz ostrzeżenie z tablicy:</label>
+                <input type="text" id="ans-6" placeholder="Wpisz treść ostrzeżenia...">
+            </div>
+            <div id="error-6" class="error">Błędna odpowiedź. Przeczytaj dokładnie tekst na czerwono-białej tablicy!</div>
+            
+            <button onclick="checkStep6()" class="accent">Zatwierdź</button>
+        </div>
+
+        <div id="step-7" class="step">
+            <h2>Punkt 6: Ścieżka leśna</h2>
+            <p id="txt-7">W związku z ostrzeżeniem nie zbaczajcie ze ścieżki, idźcie dalej szlakiem w tym samym kierunku. Nie martwcie się, najtrudniejsze podejście macie już za sobą! 😉 Idźcie prosto na najwyższy punkt wzniesienia.</p>
+            <button onclick="playSpeech('txt-7')" class="audio-btn">🔊 Odsłuchaj lektora</button>
+            
+            <button onclick="showStep(8)">Dotarliśmy na szczyt wzniesienia</button>
+        </div>
+
+        <div id="step-8" class="step">
+            <h2>Punkt 7: Kontrola Pulsu</h2>
+            <p id="txt-8">Zatrzymajcie się w najwyższym punkcie. Zmierzcie puls dowolnemu członkowi drużyny i wpiszcie wynik poniżej, aby odblokować dalszą trasę.</p>
+            <button onclick="playSpeech('txt-8')" class="audio-btn">🔊 Odsłuchaj lektora</button>
+            
+            <div class="input-group">
+                <label for="ans-8">Puls (BPM):</label>
+                <input type="number" id="ans-8" placeholder="np. 115">
+            </div>
+            
+            <div id="warning-puls" class="warning-box">
+                ⚠️ Twój puls to <span id="current-puls-val"></span> BPM! Bezwzględnie zatrzymaj się, weź głęboki oddech, weź łyk wody i podziwiaj widoki przez 2 minuty przed dalszą drogą!
+            </div>
+            
+            <button onclick="checkStep8()" class="accent">Zatwierdź puls i ruszaj dalej</button>
+        </div>
+
+        <div id="step-9" class="step">
+            <h2>Punkt 8: W stronę zachodzącego słońca</h2>
+            <p id="txt-9">Kierujcie się dalej w kierunku zachodzącego słońca. Na horyzoncie zacznie się już rysować nasz docelowy punkt – Zamek Mirów. Zanim jednak tam dotrzecie, rozejrzyjcie się uważnie dookoła. W dolinie znajduje się zagroda zwierząt hodowlanych, żyjących tu w stanie wolnym. Jakie to zwierzęta? Wpisz nazwę gatunku.</p>
+            <button onclick="playSpeech('txt-9')" class="audio-btn">🔊 Odsłuchaj lektora</button>
+            
+            <div class="input-group">
+                <label for="ans-9">Jakie to zwierzęta?</label>
+                <input type="text" id="ans-9" placeholder="Wpisz nazwę zwierząt...">
+            </div>
+            <div id="error-9" class="error">To nie te zwierzęta. Spójrz uważnie w dół na dolinę!</div>
+            
+            <button onclick="checkStep9()" class="accent">Odblokuj finał</button>
+        </div>
+
+        <div id="step-10" class="step">
+            <h2>Finał: Podejście pod Zamek Mirów</h2>
+            <p id="txt-10">Ruszajcie prosto w stronę zamku. W drodze do celu rozglądajcie się niezwykle dokładnie. Legenda głosi, że tutejszy skarb może czaić się tuż za ROGIEM! Gdy dotrzecie pod zamek i odnajdziecie złoty skarb, zróbcie zbiorowe pamiątkowe zdjęcie grupy na tle pięknego Zamku w Mirowie. Po zrobieniu zdjęcia kliknijcie przycisk na samym dole, aby zatrzymać oficjalny licznik gry!</p>
+            <button onclick="playSpeech('txt-10')" class="audio-btn">🔊 Odsłuchaj lektora</button>
 
             <div id="camera-section">
                 <div class="file-input-wrapper">
-                    <button type="button" class="accent">Zrób Zdjęcie Grupy</button>
+                    <button type="button" class="accent">📸 Zrób zdjęcie grupy na tle Zamku</button>
                     <input type="file" id="photo-capture" accept="image/*" capture="environment" onchange="previewPhoto(event)">
                 </div>
                 <img id="image-preview" class="image-preview" alt="Podgląd zdjęcia">
             </div>
-            <div id="error-3-photo" class="error">Wymagane jest załączenie zdjęcia grupy!</div>
+            <div id="error-10-photo" class="error">Wymagane jest załadowanie finałowego zdjęcia grupy!</div>
 
-            <button onclick="finishGame()">Zatrzymaj czas i sprawdź wynik</button>
+            <button onclick="finishGame()" style="background-color: #27ae60; font-size: 1.1rem; padding: 16px;">Zatrzymaj stoper i sprawdź wynik</button>
         </div>
 
-        <div id="step-4" class="step">
+        <div id="step-11" class="step">
             <h2>Gra Ukończona! 🎉</h2>
             
             <div class="screenshot-box">
@@ -309,26 +383,24 @@
                 </div>
             </div>
 
-            <p style="font-size: 0.9rem; margin-bottom: 15px; text-align: center; color: #7f8c8d;">
-                Jeśli poniższy przycisk pobierania nie zadziała na Twoim telefonie, zrób **zrzut ekranu** powyższej ramki i pokaż go koordynatorowi!
+            <p style="font-size: 0.95rem; margin-bottom: 15px; text-align: center; color: #2c3e50; font-weight: bold;">
+                💾 Pobierz wygenerowane zdjęcie poniżej na telefon, a następnie wyślij je poprzez WhatsApp, SMS lub TEAMS do Kierownika Regionu PL2 – to on posiada prawdziwy, namacalny skarb i oficjalną nagrodę!
             </p>
             
-            <button onclick="downloadWatermarkedImage()" id="download-btn-el" class="download-btn" style="display:none;">💾 Pobierz Zdjęcie z Wynikiem</button>
+            <button onclick="downloadWatermarkedImage()" id="download-btn-el" class="download-btn" style="display:none;">💾 Pobierz Oficjalne Zdjęcie (HD)</button>
 
             <div id="preview-box-el" style="display:none;" class="screenshot-box">
-                <h3>PODGLĄD PAMIĄTKI:</h3>
+                <h3>PODGLĄD PAMIĄTKI (Gotowa do druku 10x15):</h3>
                 <img id="final-watermarked-preview" class="image-preview" style="display:block; border: 1px solid #ccc; max-height: 250px;" alt="Zdjęcie z wynikami">
             </div>
             
-            <button onclick="restartGame()" style="background-color: #7f8c8d; margin-top: 15px;">Resetuj aplikację (Kolejna grupa)</button>
+            <button onclick="restartGame()" style="background-color: #7f8c8d; margin-top: 20px;">Resetuj aplikację (Kolejna grupa)</button>
         </div>
     </div>
 
     <canvas id="watermark-canvas"></canvas>
 
     <script>
-        const ANSWER_1 = "KOD1"; 
-        const ANSWER_2 = "KOD2"; 
         const WATERMARK_HEADER = "Sandvik MEU PL2"; 
         const WATERMARK_DATE = "29.06.2026";
         
@@ -337,19 +409,28 @@
 
         window.onload = function() {
             if (localStorage.getItem('teamName')) {
-                if (localStorage.getItem('gameState') === '4') {
+                if (localStorage.getItem('gameState') === '11') {
                     restartGame();
                 } else {
                     const savedStep = localStorage.getItem('gameState') || '2';
                     document.getElementById('team-name').value = localStorage.getItem('teamName');
-                    document.getElementById('code-stage-1').value = localStorage.getItem('code1') || '';
                     startTimer();
                     showStep(savedStep);
                 }
             }
         }
 
+        function playSpeech(elementId) {
+            window.speechSynthesis.cancel(); 
+            const text = document.getElementById(elementId).innerText;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'pl-PL';
+            utterance.rate = 1.0; 
+            window.speechSynthesis.speak(utterance);
+        }
+
         function showStep(stepNumber) {
+            window.speechSynthesis.cancel(); 
             document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
             document.getElementById(`step-${stepNumber}`).classList.add('active');
             localStorage.setItem('gameState', stepNumber);
@@ -359,15 +440,12 @@
         function updateTimerDisplay() {
             const startTime = parseInt(localStorage.getItem('startTime') || 0);
             if (startTime === 0) return;
-            
             const now = new Date().getTime();
             const diff = now - startTime;
-            
             const totalSec = Math.floor(diff / 1000);
             const hrs = Math.floor(totalSec / 3600);
             const mins = Math.floor((totalSec % 3600) / 60);
             const secs = totalSec % 60;
-            
             const timeStr = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
             document.getElementById('live-timer').innerText = timeStr;
             return timeStr;
@@ -381,12 +459,10 @@
 
         function startGame() {
             const nameInput = document.getElementById('team-name').value.trim();
-            const error = document.getElementById('error-1');
-            
             if (nameInput === "") {
-                error.style.display = "block";
+                document.getElementById('error-1').style.display = "block";
             } else {
-                error.style.display = "none";
+                document.getElementById('error-1').style.display = "none";
                 localStorage.setItem('teamName', nameInput);
                 localStorage.setItem('startTime', new Date().getTime().toString());
                 startTimer();
@@ -394,29 +470,86 @@
             }
         }
 
-        function checkStage1() {
-            const inputVal = document.getElementById('code-stage-1').value.trim().toUpperCase();
-            const error = document.getElementById('error-2');
-            
-            if (inputVal === ANSWER_1) {
-                error.style.display = "none";
-                localStorage.setItem('code1', inputVal);
+        function cleanString(str) {
+            return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9 ]/g, "").trim();
+        }
+
+        function checkStep2() {
+            const ans = cleanString(document.getElementById('ans-2').value);
+            if (ans === "4" || ans === "cztery") {
+                document.getElementById('error-2').style.display = "none";
                 showStep(3);
             } else {
-                error.style.display = "block";
+                document.getElementById('error-2').style.display = "block";
+            }
+        }
+
+        function checkStep3() {
+            const ans = cleanString(document.getElementById('ans-3').value);
+            if (ans === "1370") {
+                document.getElementById('error-3').style.display = "none";
+                showStep(4);
+            } else {
+                document.getElementById('error-3').style.display = "block";
+            }
+        }
+
+        function checkStep4() {
+            const ans = cleanString(document.getElementById('ans-4').value);
+            const valid = ["podkowa", "podkowe", "strzala", "strzale", "podkowa i strzala", "podkowe i strzale", "strzala i podkowa"];
+            if (valid.some(v => ans.includes(v))) {
+                document.getElementById('error-4').style.display = "none";
+                showStep(5);
+            } else {
+                document.getElementById('error-4').style.display = "block";
+            }
+        }
+
+        function checkStep6() {
+            const ans = cleanString(document.getElementById('ans-6').value);
+            const valid = ["wiatrolomy", "wiatrowaly", "wiatrolomy i wiatrowaly"];
+            if (valid.some(v => ans.includes(v))) {
+                document.getElementById('error-6').style.display = "none";
+                showStep(7);
+            } else {
+                document.getElementById('error-6').style.display = "block";
+            }
+        }
+
+        function checkStep8() {
+            const val = parseInt(document.getElementById('ans-8').value);
+            if (!val || val <= 0) return;
+            
+            if (val > 120) {
+                document.getElementById('current-puls-val').innerText = val;
+                document.getElementById('warning-puls').style.display = "block";
+                setTimeout(() => { showStep(9); }, 5000); 
+            } else {
+                document.getElementById('warning-puls').style.display = "none";
+                showStep(9);
+            }
+        }
+
+        function checkStep9() {
+            const ans = cleanString(document.getElementById('ans-9').value);
+            const valid = ["owca", "owce", "owczki", "wrzosowka", "wrzosowki"];
+            if (valid.some(v => ans.includes(v))) {
+                document.getElementById('error-9').style.display = "none";
+                showStep(10);
+            } else {
+                document.getElementById('error-9').style.display = "block";
             }
         }
 
         function previewPhoto(event) {
             const input = event.target;
             const preview = document.getElementById('image-preview');
-            
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     preview.src = e.target.result;
                     preview.style.display = "block";
-                    document.getElementById('error-3-photo').style.display = "none";
+                    document.getElementById('error-10-photo').style.display = "none";
                     tempPhotoData = e.target.result; 
                 }
                 reader.readAsDataURL(input.files[0]);
@@ -424,117 +557,96 @@
         }
 
         function finishGame() {
-            const codeInput = document.getElementById('code-stage-2').value.trim().toUpperCase();
             const photoInput = document.getElementById('photo-capture');
-            
-            const errorCode = document.getElementById('error-3-code');
-            const errorPhoto = document.getElementById('error-3-photo');
-
-            let isValid = true;
-
-            if (codeInput !== ANSWER_2) {
-                errorCode.style.display = "block";
-                isValid = false;
-            } else {
-                errorCode.style.display = "none";
-            }
-
             if (!tempPhotoData && (!photoInput.files || photoInput.files.length === 0)) {
-                errorPhoto.style.display = "block";
-                isValid = false;
-            } else {
-                errorPhoto.style.display = "none";
+                document.getElementById('error-10-photo').style.display = "block";
+                return;
             }
+            document.getElementById('error-10-photo').style.display = "none";
 
-            if (isValid) {
-                clearInterval(timerInterval);
-                const finalTimeStr = updateTimerDisplay();
-                document.getElementById('live-timer').style.display = 'none';
-                
-                document.getElementById('summary-team-name').innerText = localStorage.getItem('teamName') || "Drużyna";
-                document.getElementById('final-time').innerText = finalTimeStr;
+            clearInterval(timerInterval);
+            const finalTimeStr = updateTimerDisplay();
+            document.getElementById('live-timer').style.display = 'none';
+            document.getElementById('summary-team-name').innerText = localStorage.getItem('teamName') || "Drużyna";
+            document.getElementById('final-time').innerText = finalTimeStr;
 
-                let backupTimeout = setTimeout(() => {
-                    showStep(4);
-                }, 400);
-                
-                try {
-                    generateWatermarkedImage(finalTimeStr, () => {
-                        clearTimeout(backupTimeout); 
-                        showStep(4);
-                    });
-                } catch(e) {
-                    clearTimeout(backupTimeout);
-                    showStep(4);
-                }
+            let backupTimeout = setTimeout(() => { showStep(11); }, 600);
+            try {
+                generateWatermarkedImage(finalTimeStr, () => {
+                    clearTimeout(backupTimeout); 
+                    showStep(11);
+                });
+            } catch(e) {
+                clearTimeout(backupTimeout);
+                showStep(11);
             }
         }
 
         function generateWatermarkedImage(timeStr, callback) {
-            if (!tempPhotoData) {
-                callback();
-                return;
-            }
+            if (!tempPhotoData) { callback(); return; }
 
             const canvas = document.getElementById('watermark-canvas');
             const ctx = canvas.getContext('2d');
             const img = new Image();
             
             img.onload = function() {
-                let targetWidth = img.width;
-                let targetHeight = img.height;
-                if (targetWidth > 1400) {
-                    const ratio = 1400 / img.width;
-                    targetWidth = 1400;
-                    targetHeight = img.height * ratio;
-                }
-
+                // Konfiguracja pod maksymalną jakość i proporcje wydruku 10x15 (około 1800x1200 px)
+                let targetWidth = 1800;
+                let targetHeight = 1200;
+                
                 canvas.width = targetWidth;
                 canvas.height = targetHeight;
                 
-                ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+                // Aktywacja filtrów wygładzania obrazu dla czystych odbitek
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
                 
-                // Nowy, nieco niższy pasek (zajmuje 14% zamiast 16%)
-                const barHeight = Math.floor(canvas.height * 0.14); 
-                ctx.fillStyle = "rgba(44, 62, 80, 0.85)";
-                ctx.fillRect(0, canvas.height - barHeight, canvas.width, barHeight);
+                // Rysowanie z dopasowaniem (wypełnieniem) kadru
+                let imgRatio = img.width / img.height;
+                let targetRatio = targetWidth / targetHeight;
+                let sx = 0, sy = 0, sw = img.width, sh = img.height;
                 
-                // ZMNIEJSZONE CZCIONKI DLA BEZPIECZEŃSTWA
-                const fontSizePrimary = Math.floor(barHeight * 0.24); // Mniejsza
-                const fontSizeTeam = Math.floor(barHeight * 0.22); // Mniejsza
-                const fontSizeTime = Math.floor(barHeight * 0.35); 
-                const paddingSide = Math.floor(canvas.width * 0.04);
+                if (imgRatio > targetRatio) {
+                    sw = img.height * targetRatio;
+                    sx = (img.width - sw) / 2;
+                } else {
+                    sh = img.width / targetRatio;
+                    sy = (img.height - sh) / 2;
+                }
+                
+                ctx.drawImage(img, sx, sy, sw, sh, 0, 0, targetWidth, targetHeight);
+                
+                // Konstrukcja dolnego paska wyników
+                const barHeight = 160; 
+                ctx.fillStyle = "rgba(44, 62, 80, 0.88)";
+                ctx.fillRect(0, targetHeight - barHeight, targetWidth, barHeight);
                 
                 ctx.textBaseline = "middle";
+                const paddingSide = 60;
                 
-                // --- LEWA STRONA (Układ piętrowy dla bezpieczeństwa) ---
+                // Lewa strona - Układ tekstów
                 ctx.textAlign = "left";
                 
-                // 1. Nazwa wydarzenia (Najwyżej)
                 ctx.fillStyle = "#ffffff";
-                ctx.font = `bold ${fontSizePrimary}px 'Segoe UI', Arial, sans-serif`;
-                ctx.fillText(WATERMARK_HEADER, paddingSide, canvas.height - (barHeight * 0.72));
+                ctx.font = "bold 38px 'Segoe UI', Arial, sans-serif";
+                ctx.fillText(WATERMARK_HEADER, paddingSide, targetHeight - 115);
                 
-                // 2. Nazwa Drużyny (Środek)
                 const currentTeam = localStorage.getItem('teamName') || "Bez nazwy";
                 ctx.fillStyle = "#d35400"; 
-                ctx.font = `bold ${fontSizeTeam}px 'Segoe UI', Arial, sans-serif`;
-                ctx.fillText(`Drużyna: ${currentTeam}`, paddingSide, canvas.height - (barHeight * 0.48));
+                ctx.font = "bold 34px 'Segoe UI', Arial, sans-serif";
+                ctx.fillText(`Drużyna: ${currentTeam}`, paddingSide, targetHeight - 70);
 
-                // 3. Data (Najniżej)
-                ctx.fillStyle = "#bdc3c7"; // Szary, mniej widoczny
-                ctx.font = `${Math.floor(fontSizeTeam * 0.8)}px 'Segoe UI', Arial, sans-serif`;
-                ctx.fillText(WATERMARK_DATE, paddingSide, canvas.height - (barHeight * 0.25));
+                ctx.fillStyle = "#bdc3c7"; 
+                ctx.font = "30px 'Segoe UI', Arial, sans-serif";
+                ctx.fillText(WATERMARK_DATE, paddingSide, targetHeight - 30);
                 
-                // --- PRAWA STRONA ---
+                // Prawa strona - Licznik czasu
                 ctx.textAlign = "right";
-                ctx.fillStyle = "#2ecc71"; // Czas zielony
-                ctx.font = `bold ${fontSizeTime}px monospace`;
+                ctx.fillStyle = "#2ecc71"; 
+                ctx.font = "bold 65px monospace";
+                ctx.fillText(timeStr, targetWidth - paddingSide, targetHeight - 80);
                 
-                // Czas jest wycentrowany pionowo względem całego paska
-                ctx.fillText(timeStr, canvas.width - paddingSide, canvas.height - (barHeight * 0.5));
-                
-                const finalDataUrl = canvas.toDataURL('image/jpeg', 0.85); 
+                const finalDataUrl = canvas.toDataURL('image/jpeg', 0.92); 
                 localStorage.setItem('finalWatermarkedPhoto', finalDataUrl);
                 
                 document.getElementById('final-watermarked-preview').src = finalDataUrl;
@@ -543,20 +655,14 @@
                 
                 callback();
             };
-            
-            img.onerror = function() {
-                callback();
-            }
-            
+            img.onerror = function() { callback(); }
             img.src = tempPhotoData;
         }
 
         function downloadWatermarkedImage() {
             const dataUrl = localStorage.getItem('finalWatermarkedPhoto');
             if (!dataUrl) return;
-            
             const team = (localStorage.getItem('teamName') || 'team').replace(/[^a-z0-9]/gi, '_').toLowerCase();
-            
             const downloadLink = document.createElement('a');
             downloadLink.href = dataUrl;
             downloadLink.download = `wynik_${team}_sandvik.jpg`;
@@ -566,22 +672,25 @@
         }
 
         function restartGame() {
+            window.speechSynthesis.cancel();
             clearInterval(timerInterval);
             localStorage.clear();
             tempPhotoData = null;
-            
             document.getElementById('team-name').value = "";
-            document.getElementById('code-stage-1').value = "";
-            document.getElementById('code-stage-2').value = "";
+            document.getElementById('ans-2').value = "";
+            document.getElementById('ans-3').value = "";
+            document.getElementById('ans-4').value = "";
+            document.getElementById('ans-6').value = "";
+            document.getElementById('ans-8').value = "";
+            document.getElementById('ans-9').value = "";
             document.getElementById('photo-capture').value = "";
-            
+            document.getElementById('warning-puls').style.display = "none";
             document.getElementById('image-preview').style.display = "none";
             document.getElementById('image-preview').src = "";
             document.getElementById('final-watermarked-preview').src = "";
             document.getElementById('download-btn-el').style.display = "none";
             document.getElementById('preview-box-el').style.display = "none";
             document.getElementById('live-timer').style.display = 'none';
-            
             showStep(1);
         }
     </script>
