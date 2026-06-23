@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gra Terenowa - Sandvik MEU PL2</title>
+    <title>Gra Terenowa - Sandvik MEU PL2 (HD)</title>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -169,8 +169,8 @@
 
         .image-preview {
             width: 100%;
-            max-height: 250px;
-            object-fit: cover;
+            max-height: 280px; /* Zwiększona dla lepszego podglądu w pionie */
+            object-fit: contain; /* Contain, by nie ucinało w podglądzie */
             border-radius: 6px;
             border: 2px dashed #bdc3c7;
             display: none;
@@ -226,7 +226,7 @@
 
     <div class="container">
         <div class="header-area">
-            <h1>Gra: Orle Gniazda</h1>
+            <h1>Gra: Sandvik i Orle Gniazda</h1>
             <div id="live-timer">00:00:00</div>
         </div>
 
@@ -246,7 +246,7 @@
 
         <div id="step-2" class="step">
             <h2>Punkt 1: Rozgrzewka</h2>
-            <p id="txt-2">Pytanie techniczne na rozgrzewkę: przyjrzyj się uważnie drzwiom restauracji hotelowej. Ile zawiasów (łącznie dużych i małych) trzyma to skrzydło?</p>
+            <p id="txt-2">Pytanie techniczne na rozgrzewkę: przyjrzyj się uważnie drzwiom restauracji hotelowej. Ile zawiasów (łącznie dużych i małych) trzyma to skrzydło drzwi restauracji?</p>
             <button onclick="playSpeech('txt-2')" class="audio-btn">🔊 Odsłuchaj lektora</button>
             
             <div class="input-group">
@@ -281,14 +281,14 @@
                 <label for="ans-4">Wpisz element herbu:</label>
                 <input type="text" id="ans-4" placeholder="Co widzisz na herbie...">
             </div>
-            <div id="error-4" class="error">To nie to. Spójrz wyżej nad bramę główną!</div>
+            <div id="error-4" class="error">Herb zawieszony nad bramą główną przedstawia coś innego!</div>
             
             <button onclick="checkStep4()" class="accent">Zatwierdź element</button>
         </div>
 
         <div id="step-5" class="step">
             <h2>Punkt 4: Punkt Widokowy</h2>
-            <p id="txt-5">Obejdźcie zamek dookoła, kierujcie się na zachód. Idźcie w kierunku punktu widokowego z dwoma ławkami i dużą łąką. To piękny widok, idealny punkt na złapanie oddechu. Usiądźcie wygodnie, odpocznijcie chwilę podziwiając zamek w Bobolicach, a gdy będziecie gotowi – kliknijcie przycisk poniżej.</p>
+            <p id="txt-5">Obejdźcie zamek dookoła, kierujcie się na zachód. Idźcie w kierunku punktu widokowego z dwoma ławkami i dużą łąką. Usiądźcie na nich wygodnie, odpocznijcie chwilę podziwiając zamek Bobolice – to idealny punkt widokowy. Gdy będziecie na miesjcu i odpoczniecie, kliknijcie przycisk dalej.</p>
             <button onclick="playSpeech('txt-5')" class="audio-btn">🔊 Odsłuchaj lektora</button>
             
             <button onclick="showStep(6)">Odpoczęliśmy, idziemy dalej!</button>
@@ -296,29 +296,29 @@
 
         <div id="step-6" class="step">
             <h2>Punkt 5: Kierunek Ciemny Las</h2>
-            <p id="txt-6">Gdy już odpoczniesz na ławkach, kieruj się dalej w stronę ciemnego lasu. Na skraju lasu waszą uwagę przykuje biało-czerwona tablica ostrzegawcza. Wpisz przed czym dokładnie ostrzega ta tablica?</p>
+            <p id="txt-6">Gdy odpoczniecie na ławkach, kierujcie się dalej w górę, w stronę ciemnego lasu. Tam czeka na Was kolejna wskazówka. Na skraju lasu waszą uwagę przykuje biało-czerwona tablica ostrzegawcza. Wpisz przed czym dokładnie ostrzega ta tablica?</p>
             <button onclick="playSpeech('txt-6')" class="audio-btn">🔊 Odsłuchaj lektora</button>
             
             <div class="input-group">
                 <label for="ans-6">Wpisz ostrzeżenie z tablicy:</label>
-                <input type="text" id="ans-6" placeholder="Wpisz treść ostrzeżenia...">
+                <input type="text" id="ans-6" placeholder="Treść tablicy...">
             </div>
-            <div id="error-6" class="error">Błędna odpowiedź. Przeczytaj dokładnie tekst na czerwono-białej tablicy!</div>
+            <div id="error-6" class="error">Błędna odpowiedź. Przeczytaj tekst na biało-czerwonej tablicy!</div>
             
             <button onclick="checkStep6()" class="accent">Zatwierdź</button>
         </div>
 
         <div id="step-7" class="step">
-            <h2>Punkt 6: Ścieżka leśna</h2>
-            <p id="txt-7">W związku z ostrzeżeniem nie zbaczajcie ze ścieżki, idźcie dalej szlakiem w tym samym kierunku. Nie martwcie się, najtrudniejsze podejście macie już za sobą! 😉 Idźcie prosto na najwyższy punkt wzniesienia.</p>
+            <h2>Punkt 6: Ścieżka Leśna</h2>
+            <p id="txt-7">W związku z ostrzeżeniem nie zbaczajcie ze ścieżki, idźcie dalej szlakiem w tym samym kierunku. Nie martwcie się, najtrudniejsze podejście macie już za sobą! 😉 Kierujcie się wprost na najwyższy punkt.</p>
             <button onclick="playSpeech('txt-7')" class="audio-btn">🔊 Odsłuchaj lektora</button>
             
-            <button onclick="showStep(8)">Dotarliśmy na szczyt wzniesienia</button>
+            <button onclick="showStep(8)">Jesteśmy w najwyższym punkcie!</button>
         </div>
 
         <div id="step-8" class="step">
             <h2>Punkt 7: Kontrola Pulsu</h2>
-            <p id="txt-8">Zatrzymajcie się w najwyższym punkcie. Zmierzcie puls dowolnemu członkowi drużyny i wpiszcie wynik poniżej, aby odblokować dalszą trasę.</p>
+            <p id="txt-8">Zatrzymajcie się w najwyższym punkcie. Zmierzcie puls dowolnemu członkowi drużyny i wpiszcie wynik poniżej, aby odblokować finałową trasę.</p>
             <button onclick="playSpeech('txt-8')" class="audio-btn">🔊 Odsłuchaj lektora</button>
             
             <div class="input-group">
@@ -327,29 +327,29 @@
             </div>
             
             <div id="warning-puls" class="warning-box">
-                ⚠️ Twój puls to <span id="current-puls-val"></span> BPM! Bezwzględnie zatrzymaj się, weź głęboki oddech, weź łyk wody i podziwiaj widoki przez 2 minuty przed dalszą drogą!
+                ⚠️ Twój puls to <span id="current-puls-val"></span> BPM! Bezwzględnie zatrzymaj się, weź głęboki oddech, łyk wody i podziwiaj widoki przez 2 minuty przed dalszą drogą!
             </div>
             
             <button onclick="checkStep8()" class="accent">Zatwierdź puls i ruszaj dalej</button>
         </div>
 
         <div id="step-9" class="step">
-            <h2>Punkt 8: W stronę zachodzącego słońca</h2>
-            <p id="txt-9">Kierujcie się dalej w kierunku zachodzącego słońca. Na horyzoncie zacznie się już rysować nasz docelowy punkt – Zamek Mirów. Zanim jednak tam dotrzecie, rozejrzyjcie się uważnie dookoła. W dolinie znajduje się zagroda zwierząt hodowlanych, żyjących tu w stanie wolnym. Jakie to zwierzęta? Wpisz nazwę gatunku.</p>
+            <h2>Punkt 8: W kierunku zachodzącego słońca</h2>
+            <p id="txt-9">Kierujcie się dalej w kierunku zachodzącego słońca. Na horyzoncie zacznie się już rysować wasz docelowy punkt – Zamek Mirów. Zanim tam dotrzecie, rozejrzyjcie się uważnie dookoła. W dolinie po lewej znajduje się zagroda zwierząt hodowlanych. Jakie to zwierzęta? Wpisz nazwę gatunku.</p>
             <button onclick="playSpeech('txt-9')" class="audio-btn">🔊 Odsłuchaj lektora</button>
             
             <div class="input-group">
                 <label for="ans-9">Jakie to zwierzęta?</label>
-                <input type="text" id="ans-9" placeholder="Wpisz nazwę zwierząt...">
+                <input type="text" id="ans-9" placeholder="Wpisz gatunek zwierząt...">
             </div>
-            <div id="error-9" class="error">To nie te zwierzęta. Spójrz uważnie w dół na dolinę!</div>
+            <div id="error-9" class="error">Błędna odpowiedź. Spójrz uważnie w dół na dolinę! Gdy nie będzie tam zwierząt spójrz pod nogi (ślady), krzaki (sierść)</div>
             
             <button onclick="checkStep9()" class="accent">Odblokuj finał</button>
         </div>
 
         <div id="step-10" class="step">
             <h2>Finał: Podejście pod Zamek Mirów</h2>
-            <p id="txt-10">Ruszajcie prosto w stronę zamku. W drodze do celu rozglądajcie się niezwykle dokładnie. Legenda głosi, że tutejszy skarb może czaić się tuż za ROGIEM! Gdy dotrzecie pod zamek i odnajdziecie złoty skarb, zróbcie zbiorowe pamiątkowe zdjęcie grupy na tle pięknego Zamku w Mirowie. Po zrobieniu zdjęcia kliknijcie przycisk na samym dole, aby zatrzymać oficjalny licznik gry!</p>
+            <p id="txt-10">Ruszajcie prosto w stronę zamku. W drodze do celu rozglądajcie się dokładnie. Legenda głosi, że skarb może czaić się tuż za ROGIEM! Gdy dotrzecie na miejsce i odnajdziecie złoty skarb, zróbcie zbiorowe pamiątkowe zdjęcie grupy na tle Zamku w Mirowie. Po zrobieniu zdjęcia kliknijcie przycisk na dole, by zatrzymać licznik gry i zapisać swój wynik!</p>
             <button onclick="playSpeech('txt-10')" class="audio-btn">🔊 Odsłuchaj lektora</button>
 
             <div id="camera-section">
@@ -384,17 +384,17 @@
             </div>
 
             <p style="font-size: 0.95rem; margin-bottom: 15px; text-align: center; color: #2c3e50; font-weight: bold;">
-                💾 Pobierz wygenerowane zdjęcie poniżej na telefon, a następnie wyślij je poprzez WhatsApp, SMS lub TEAMS do Kierownika Regionu PL2 – to on posiada prawdziwy, namacalny skarb i oficjalną nagrodę!
+                💾 Pobierz wygenerowane zdjęcie poniżej, a następnie wyślij je WhatsApp, SMS lub TEAMS do Kierownika Regionu PL2 – on posiada prawdziwy skarb i nagrodę!
             </p>
             
-            <button onclick="downloadWatermarkedImage()" id="download-btn-el" class="download-btn" style="display:none;">💾 Pobierz Oficjalne Zdjęcie (HD)</button>
+            <button onclick="downloadWatermarkedImage()" id="download-btn-el" class="download-btn" style="display:none;">💾 Pobierz Zdjęcie (HD)</button>
 
             <div id="preview-box-el" style="display:none;" class="screenshot-box">
-                <h3>PODGLĄD PAMIĄTKI (Gotowa do druku 10x15):</h3>
-                <img id="final-watermarked-preview" class="image-preview" style="display:block; border: 1px solid #ccc; max-height: 250px;" alt="Zdjęcie z wynikami">
+                <h3>PODGLĄD PAMIĄTKI:</h3>
+                <img id="final-watermarked-preview" class="image-preview" style="display:block; border: 1px solid #ccc; max-height: 280px; object-fit: contain;" alt="Zdjęcie z wynikami">
             </div>
             
-            <button onclick="restartGame()" style="background-color: #7f8c8d; margin-top: 20px;">Resetuj aplikację (Kolejna grupa)</button>
+            <button onclick="restartGame()" style="background-color: #7f8c8d; margin-top: 20px;">Resetuj aplikację (Zacznij od nowa)</button>
         </div>
     </div>
 
@@ -496,7 +496,7 @@
 
         function checkStep4() {
             const ans = cleanString(document.getElementById('ans-4').value);
-            const valid = ["podkowa", "podkowe", "strzala", "strzale", "podkowa i strzala", "podkowe i strzale", "strzala i podkowa"];
+            const valid = [ "podkowa", "podkowe", "podkowę", "strzala", "strzale", "strzała", "strzałę", "podkowa i strzala", "podkowa i strzała", "podkowe i strzale", "podkowę i strzałę", "strzala i podkowa", "strzała i podkowa" ];
             if (valid.some(v => ans.includes(v))) {
                 document.getElementById('error-4').style.display = "none";
                 showStep(5);
@@ -519,7 +519,6 @@
         function checkStep8() {
             const val = parseInt(document.getElementById('ans-8').value);
             if (!val || val <= 0) return;
-            
             if (val > 120) {
                 document.getElementById('current-puls-val').innerText = val;
                 document.getElementById('warning-puls').style.display = "block";
@@ -570,7 +569,7 @@
             document.getElementById('summary-team-name').innerText = localStorage.getItem('teamName') || "Drużyna";
             document.getElementById('final-time').innerText = finalTimeStr;
 
-            let backupTimeout = setTimeout(() => { showStep(11); }, 600);
+            let backupTimeout = setTimeout(() => { showStep(11); }, 700);
             try {
                 generateWatermarkedImage(finalTimeStr, () => {
                     clearTimeout(backupTimeout); 
@@ -590,63 +589,64 @@
             const img = new Image();
             
             img.onload = function() {
-                // Konfiguracja pod maksymalną jakość i proporcje wydruku 10x15 (około 1800x1200 px)
-                let targetWidth = 1800;
-                let targetHeight = 1200;
+                // Konfiguracja pod zachowanie oryginalnego kadru z aparatu (HD, bez ucinania)
+                // Skalujemy dłuższą krawędź do max 2400px (HD, gotowe pod duży ekran/wydruk)
+                let targetWidth, targetHeight;
+                let maxEdge = 2400; // Kompromis między jakością a stabilnością Canvas na telefonie
+                
+                let imgRatio = img.width / img.height;
+                
+                if (imgRatio > 1) { // Poziome
+                    targetWidth = Math.min(img.width, maxEdge);
+                    targetHeight = targetWidth / imgRatio;
+                } else { // Pionowe lub kwadratowe
+                    targetHeight = Math.min(img.height, maxEdge);
+                    targetWidth = targetHeight * imgRatio;
+                }
                 
                 canvas.width = targetWidth;
                 canvas.height = targetHeight;
                 
-                // Aktywacja filtrów wygładzania obrazu dla czystych odbitek
+                // Aktywacja filtrów wygładzania obrazu
                 ctx.imageSmoothingEnabled = true;
                 ctx.imageSmoothingQuality = 'high';
                 
-                // Rysowanie z dopasowaniem (wypełnieniem) kadru
-                let imgRatio = img.width / img.height;
-                let targetRatio = targetWidth / targetHeight;
-                let sx = 0, sy = 0, sw = img.width, sh = img.height;
+                // Rysujemy całe zdjęcie, bez ucinania (kadr oryginalny)
+                ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
                 
-                if (imgRatio > targetRatio) {
-                    sw = img.height * targetRatio;
-                    sx = (img.width - sw) / 2;
-                } else {
-                    sh = img.width / targetRatio;
-                    sy = (img.height - sh) / 2;
-                }
+                // Konstrukcja dolnego paska wyników (skalowana proporcjonalnie do wysokości)
+                const barHeight = Math.floor(targetHeight * 0.12); // Pasek zajmuje 12% wysokości
+                if (barHeight < 60) barHeight = 60; // Bezpiecznik
                 
-                ctx.drawImage(img, sx, sy, sw, sh, 0, 0, targetWidth, targetHeight);
-                
-                // Konstrukcja dolnego paska wyników
-                const barHeight = 160; 
                 ctx.fillStyle = "rgba(44, 62, 80, 0.88)";
                 ctx.fillRect(0, targetHeight - barHeight, targetWidth, barHeight);
                 
                 ctx.textBaseline = "middle";
-                const paddingSide = 60;
+                const paddingSide = Math.floor(targetWidth * 0.04);
                 
-                // Lewa strona - Układ tekstów
+                // Lewa strona - Układ tekstów (skalowany)
                 ctx.textAlign = "left";
                 
                 ctx.fillStyle = "#ffffff";
-                ctx.font = "bold 38px 'Segoe UI', Arial, sans-serif";
-                ctx.fillText(WATERMARK_HEADER, paddingSide, targetHeight - 115);
+                ctx.font = `bold ${Math.floor(barHeight * 0.28)}px 'Segoe UI', Arial, sans-serif`;
+                ctx.fillText(WATERMARK_HEADER, paddingSide, targetHeight - (barHeight * 0.7));
                 
                 const currentTeam = localStorage.getItem('teamName') || "Bez nazwy";
                 ctx.fillStyle = "#d35400"; 
-                ctx.font = "bold 34px 'Segoe UI', Arial, sans-serif";
-                ctx.fillText(`Drużyna: ${currentTeam}`, paddingSide, targetHeight - 70);
+                ctx.font = `bold ${Math.floor(barHeight * 0.24)}px 'Segoe UI', Arial, sans-serif`;
+                ctx.fillText(`Drużyna: ${currentTeam}`, paddingSide, targetHeight - (barHeight * 0.42));
 
                 ctx.fillStyle = "#bdc3c7"; 
-                ctx.font = "30px 'Segoe UI', Arial, sans-serif";
-                ctx.fillText(WATERMARK_DATE, paddingSide, targetHeight - 30);
+                ctx.font = `${Math.floor(barHeight * 0.20)}px 'Segoe UI', Arial, sans-serif`;
+                ctx.fillText(WATERMARK_DATE, paddingSide, targetHeight - (barHeight * 0.18));
                 
-                // Prawa strona - Licznik czasu
+                // Prawa strona - Licznik czasu (skalowany, monospace)
                 ctx.textAlign = "right";
                 ctx.fillStyle = "#2ecc71"; 
-                ctx.font = "bold 65px monospace";
-                ctx.fillText(timeStr, targetWidth - paddingSide, targetHeight - 80);
+                ctx.font = `bold ${Math.floor(barHeight * 0.5)}px monospace`;
+                ctx.fillText(timeStr, targetWidth - paddingSide, targetHeight - (barHeight * 0.5));
                 
-                const finalDataUrl = canvas.toDataURL('image/jpeg', 0.92); 
+                const finalDataUrl = canvas.toDataURL('image/jpeg', 0.90); 
                 localStorage.setItem('finalWatermarkedPhoto', finalDataUrl);
                 
                 document.getElementById('final-watermarked-preview').src = finalDataUrl;
