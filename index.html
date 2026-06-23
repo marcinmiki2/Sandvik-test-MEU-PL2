@@ -283,7 +283,7 @@
 
         <div id="step-3" class="step">
             <h2>Punkt 2: Wzgórze Zamkowe</h2>
-            <p id="txt-3">Podejdźcie do tablicy informacyjnej na Wzgórzu Zamkowym. Przeczytajcie historię tego miejsca i podajcie: w którym roku Ludwik Węgierski nadał zamek Bobolice swojemu bratankowi Władysławowi Opolczykowi?</p>
+            <p id="txt-3">Podejdźcie do tablicy informacyjnej na Wzgórze Zamkowym. Przeczytajcie historię tego miejsca i podajcie: w którym roku Ludwik Węgierski nadał zamek Bobolice swojemu bratankowi Władysławowi Opolczykowi?</p>
             <button onclick="playSpeech('txt-3')" class="audio-btn">🔊 Odsłuchaj lektora</button>
             
             <div class="input-group">
@@ -358,7 +358,7 @@
 
         <div id="step-9" class="step">
             <h2>Punkt 8: W kierunku zachodzącego słońca</h2>
-            <p id="txt-9">Kierujcie się dalej w kierunku zachodzącego słońca.<br>Na horyzoncie zacznie się ukazywać wasz docelowy punkt – Zamek Mirów.<br>Zanim tam dotrzecie, rozejrzyjcie się uważnie dookoła. W dolinie po lewej znajduje się zagroda zwierząt hodowlanych wolno żyjacych.<br>Jakie to zwierzęta? Wpisz nazwę gatunku.</p>
+            <p id="txt-9">Kierujcie się dalej w kierunku zachodzącego słońca.<br>Na horyzoncie zacznie się ukazywać wasz docelowy punkt – Zamek Mirów.<br>Zanim tam dotrzecie, rozejrzyjcie się uważnie dookoła. W dolinie po lewej znajduje się zagroda zwierząt hodowlanych wolno żyjących.<br>Jakie to zwierzęta? Wpisz nazwę gatunku.</p>
             <button onclick="playSpeech('txt-9')" class="audio-btn">🔊 Odsłuchaj lektora</button>
             
             <div class="input-group">
@@ -367,13 +367,27 @@
             </div>
             <div id="error-9" class="error">Błędna odpowiedź. Spójrz uważnie w dół na dolinę! Gdy nie będzie tam zwierząt spójrz pod nogi (ślady) 🐾, spójrz na krzaki (sierść), jeszcze raz spójrz pod nogi 💩 .</div>
             
-            <button onclick="checkStep9()" class="accent">Odblokuj ostatnie wskazówki na ostatnią prostą</button>
+            <button onclick="checkStep9()" class="accent">Zatwierdź gatunek</button>
         </div>
 
         <div id="step-10" class="step">
-            <h2>Finał: Podejście pod Zamek Mirów</h2>
-            <p id="txt-10">Ruszajcie prosto w stronę zamku. W drodze do celu rozglądajcie się dokładnie. Legenda głosi, że skarb może czaić się tuż za ROGIEM 🗻🪨🏰<br> Gdy dotrzecie na miejsce i odnajdziecie złoty skarb, zróbcie zbiorowe pamiątkowe zdjęcie grupy na tle Zamku w Mirowie.<br>Po zrobieniu zdjęcia kliknijcie przycisk na dole, by zatrzymać licznik gry i zapisać swój wynik!</p>
+            <h2>Punkt 9: Śladami przeszłości</h2>
+            <p id="txt-10">Skoro wiecie już, kto zamieszkuje dolinę, ruszajcie dalej ku ruinom. Wasza firma, Sandvik, ma dumne korzenie wywodzące się ze Szwecji.<br>Zbliżając się do celu, pomyślcie o historii tego regionu. Jaki burzliwy i niszczycielski proces z XVII wieku trwale powiązał Szwedów z losem Zamku w Mirowie? Wpisz nazwę tego wydarzenia historycznego.</p>
             <button onclick="playSpeech('txt-10')" class="audio-btn">🔊 Odsłuchaj lektora</button>
+            
+            <div class="input-group">
+                <label for="ans-10">Nazwa wydarzenia historycznego:</label>
+                <input type="text" id="ans-10" placeholder="Co zrobili tu Szwedzi...">
+            </div>
+            <div id="error-10" class="error">To nie to wydarzenie. Podpowiedź: To wydarzenie zalało całą Polskę niczym wielka fala w latach 1655–1660!</div>
+            
+            <button onclick="checkStep10()" class="accent">Odblokuj finałowe wskazówki</button>
+        </div>
+
+        <div id="step-11" class="step">
+            <h2>Finał: Podejście pod Zamek Mirów</h2>
+            <p id="txt-11">Ruszajcie prosto w stronę zamku. W drodze do celu rozglądajcie się dokładnie. Legenda głosi, że skarb może czaić się tuż za ROGIEM 🗻🪨🏰<br> Gdy dotrzecie na miejsce i odnajdziecie złoty skarb, zróbcie zbiorowe pamiątkowe zdjęcie grupy na tle Zamku w Mirowie.<br>Po zrobieniu zdjęcia kliknijcie przycisk na dole, by zatrzymać licznik gry i zapisać swój wynik!</p>
+            <button onclick="playSpeech('txt-11')" class="audio-btn">🔊 Odsłuchaj lektora</button>
 
             <div id="camera-section">
                 <div class="file-input-wrapper">
@@ -382,12 +396,12 @@
                 </div>
                 <img id="image-preview" class="image-preview" alt="Podgląd zdjęcia">
             </div>
-            <div id="error-10-photo" class="error">Wymagane jest załadowanie finałowego zdjęcia grupy!</div>
+            <div id="error-11-photo" class="error">Wymagane jest załadowanie finałowego zdjęcia grupy!</div>
 
             <button onclick="finishGame()" style="background-color: #27ae60; color: #ffffff; font-size: 1.1rem; padding: 16px;">Zatrzymaj stoper i sprawdź wynik</button>
         </div>
 
-        <div id="step-11" class="step">
+        <div id="step-12" class="step">
             <h2>Gra Ukończona! 🎉</h2>
             
             <div class="screenshot-box">
@@ -407,7 +421,7 @@
             </div>
 
             <p style="font-size: 0.95rem; margin-bottom: 15px; text-align: center; color: #111111; font-weight: bold;">
-                💾 Pobierz wygenerowane zdjęcie poniżej, a następnie wyślij je przez WhatsApp, SMS lub TEAMS do Kierownika Regionu PL2 – on posiada prawdziwy skarb i nagrodę dla naszybszej drużyny!
+                💾 Pobierz wygenerowane zdjęcie poniżej, a następnie wyślij je przez WhatsApp, SMS lub TEAMS do Kierownika Regionu PL2 – on posiada prawdziwy skarb i nagrodę dla najszybszej drużyny!
             </p>
             
             <button onclick="downloadWatermarkedImage()" id="download-btn-el" class="download-btn" style="display:none;">💾 Pobierz Zdjęcie (HD)</button>
@@ -433,7 +447,7 @@
 
         window.onload = function() {
             if (localStorage.getItem('teamName')) {
-                if (localStorage.getItem('gameState') === '11') {
+                if (localStorage.getItem('gameState') === '12') {
                     restartGame();
                 } else {
                     const savedStep = localStorage.getItem('gameState') || '2';
@@ -448,6 +462,7 @@
             window.speechSynthesis.cancel(); 
             const text = document.getElementById(elementId).innerText;
             const utterance = new SpeechSynthesisUtterance(text);
+            document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
             utterance.lang = 'pl-PL';
             utterance.rate = 1.0; 
             window.speechSynthesis.speak(utterance);
@@ -495,7 +510,10 @@
         }
 
         function cleanString(str) {
-            return str.toLowerCase().trim();
+            return str.toLowerCase().trim()
+                .replace(/ą/g, 'a').replace(/ć/g, 'c').replace(/ę/g, 'e')
+                .replace(/ł/g, 'l').replace(/ń/g, 'n').replace(/ó/g, 'o')
+                .replace(/ś/g, 's').replace(/ź/g, 'z').replace(/ż/g, 'z');
         }
 
         function checkStep2() {
@@ -520,7 +538,7 @@
 
         function checkStep4() {
             const ans = cleanString(document.getElementById('ans-4').value);
-            const valid = ["podkowa", "podkowe", "podkowę", "strzala", "strzale", "strzała", "strzałę"];
+            const valid = ["podkowa", "podkowe", "strzala", "strzale"];
             if (valid.some(v => ans.includes(v))) {
                 document.getElementById('error-4').style.display = "none";
                 showStep(5);
@@ -529,74 +547,75 @@
             }
         }
 
-     function checkStep6() {
-    const ans = cleanString(document.getElementById('ans-6').value);
-    
-    // Dzięki cleanString sprawdzamy tylko małe litery bez polskich znaków.
-    // Uwzględniamy: wiatrołomy, wiatrowały, wiatrołom, wiatrował oraz wersje pisane osobno.
-    const valid = [
-        "wiatrolomy", 
-        "wiatrowaly", 
-        "wiatrolom", 
-        "wiatrowal",
-        "wiatro lomy", 
-        "wiatro waly", 
-        "wiatro lom", 
-        "wiatro wal"
-    ];
-    
-    if (valid.some(v => ans.includes(v))) {
-        document.getElementById('error-6').style.display = "none";
-        showStep(7);
-    } else {
-        document.getElementById('error-6').style.display = "block";
-    }
-}
-
-function checkStep8() {
-    const val = parseInt(document.getElementById('ans-8').value);
-    if (!val || val <= 0) return;
-    
-    if (val > 120) {
-        document.getElementById('current-puls-val').innerText = val;
-        const warningBox = document.getElementById('warning-puls');
-        warningBox.style.display = "block";
-        
-        // Blokujemy przycisk, aby nie dało się go kliknąć ponownie
-        const btn = document.querySelector("#step-8 button");
-        btn.disabled = true;
-        btn.style.opacity = "0.5";
-        btn.style.cursor = "not-allowed";
-        
-        let timeLeft = 120; // 2 minuty przymusowego odpoczynku
-        
-        const countdownInterval = setInterval(() => {
-            timeLeft--;
-            if (timeLeft > 0) {
-                warningBox.innerHTML = `⚠️ Twój puls to ${val} BPM! Bezwzględnie zatrzymaj się, weź głęboki oddech, łyk wody i podziwiaj widoki!<br><br><strong>Trasa odblokuje się automatycznie za: ${timeLeft} sekund.</strong>`;
+        function checkStep6() {
+            const ans = cleanString(document.getElementById('ans-6').value);
+            const valid = [
+                "wiatrolomy", "wiatrowaly", "wiatrolom", "wiatrowal",
+                "wiatro lomy", "wiatro waly", "wiatro lom", "wiatro wal"
+            ];
+            
+            if (valid.some(v => ans.includes(v))) {
+                document.getElementById('error-6').style.display = "none";
+                showStep(7);
             } else {
-                clearInterval(countdownInterval);
-                btn.disabled = false;
-                btn.style.opacity = "1";
-                btn.style.cursor = "pointer";
+                document.getElementById('error-6').style.display = "block";
+            }
+        }
+
+        function checkStep8() {
+            const val = parseInt(document.getElementById('ans-8').value);
+            if (!val || val <= 0) return;
+            
+            if (val > 120) {
+                document.getElementById('current-puls-val').innerText = val;
+                const warningBox = document.getElementById('warning-puls');
+                warningBox.style.display = "block";
+                
+                const btn = document.getElementById('puls-submit-btn');
+                btn.disabled = true;
+                btn.style.opacity = "0.5";
+                btn.style.cursor = "not-allowed";
+                
+                let timeLeft = 120;
+                
+                const countdownInterval = setInterval(() => {
+                    timeLeft--;
+                    if (timeLeft > 0) {
+                        warningBox.innerHTML = `⚠️ Twój puls to ${val} BPM! Bezwzględnie zatrzymaj się, weź głęboki oddech, łyk wody i podziwiaj widoki!<br><br><strong>Trasa odblokuje się automatycznie za: ${timeLeft} sekund.</strong>`;
+                    } else {
+                        clearInterval(countdownInterval);
+                        btn.disabled = false;
+                        btn.style.opacity = "1";
+                        btn.style.cursor = "pointer";
+                        showStep(9);
+                    }
+                }, 1000);
+                
+            } else {
+                document.getElementById('warning-puls').style.display = "none";
                 showStep(9);
             }
-        }, 1000);
-        
-    } else {
-        document.getElementById('warning-puls').style.display = "none";
-        showStep(9);
-    }
-}
+        }
 
         function checkStep9() {
             const ans = cleanString(document.getElementById('ans-9').value);
-            const valid = ["owca", "owce", "owieczki", "wrzosowka", "wrzosówka", "wrzosowki", "wrzosówki", "OWCA", "OWCE", "OWIECZKI", "WRZOSOWKA", "WRZOSÓWKA", "WRZOSOWKI", "WRZOSÓWKI", "Owca", "Owce", "Owieczki", "Wrzosowka", "Wrzosówka", "Wrzosowki", "Wrzosówki" ];
+            const valid = ["owca", "owce", "owieczki", "wrzosowka", "wrzosowki"];
             if (valid.some(v => ans.includes(v))) {
                 document.getElementById('error-9').style.display = "none";
                 showStep(10);
             } else {
                 document.getElementById('error-9').style.display = "block";
+            }
+        }
+
+        function checkStep10() {
+            const ans = cleanString(document.getElementById('ans-10').value);
+            const valid = ["szwed", "szwedzi", "szwedzk", "potop", "zniszcze", "najazd"];
+            if (valid.some(v => ans.includes(v))) {
+                document.getElementById('error-10').style.display = "none";
+                showStep(11);
+            } else {
+                document.getElementById('error-10').style.display = "block";
             }
         }
 
@@ -608,7 +627,7 @@ function checkStep8() {
                 reader.onload = function(e) {
                     preview.src = e.target.result;
                     preview.style.display = "block";
-                    document.getElementById('error-10-photo').style.display = "none";
+                    document.getElementById('error-11-photo').style.display = "none";
                     tempPhotoData = e.target.result; 
                 }
                 reader.readAsDataURL(input.files[0]);
@@ -618,10 +637,10 @@ function checkStep8() {
         function finishGame() {
             const photoInput = document.getElementById('photo-capture');
             if (!tempPhotoData && (!photoInput.files || photoInput.files.length === 0)) {
-                document.getElementById('error-10-photo').style.display = "block";
+                document.getElementById('error-11-photo').style.display = "block";
                 return;
             }
-            document.getElementById('error-10-photo').style.display = "none";
+            document.getElementById('error-11-photo').style.display = "none";
 
             clearInterval(timerInterval);
             const finalTimeStr = updateTimerDisplay();
@@ -629,15 +648,15 @@ function checkStep8() {
             document.getElementById('summary-team-name').innerText = localStorage.getItem('teamName') || "Drużyna";
             document.getElementById('final-time').innerText = finalTimeStr;
 
-            let backupTimeout = setTimeout(() => { showStep(11); }, 700);
+            let backupTimeout = setTimeout(() => { showStep(12); }, 700);
             try {
                 generateWatermarkedImage(finalTimeStr, () => {
                     clearTimeout(backupTimeout); 
-                    showStep(11);
+                    showStep(12);
                 });
             } catch(e) {
                 clearTimeout(backupTimeout);
-                showStep(11);
+                showStep(12);
             }
         }
 
@@ -758,8 +777,9 @@ function checkStep8() {
             
             const btn = document.getElementById('puls-submit-btn');
             btn.disabled = false;
-            btn.innerText = "Zatwierdź puls i ruszaj dalej";
-            btn.onclick = checkStep8;
+            btn.style.opacity = "1";
+            btn.style.cursor = "pointer";
+            btn.innerHTML = "Zatwierdź puls i ruszaj dalej";
 
             document.getElementById('team-name').value = "";
             document.getElementById('ans-2').value = "";
@@ -768,6 +788,7 @@ function checkStep8() {
             document.getElementById('ans-6').value = "";
             document.getElementById('ans-8').value = "";
             document.getElementById('ans-9').value = "";
+            document.getElementById('ans-10').value = "";
             document.getElementById('photo-capture').value = "";
             document.getElementById('warning-puls').style.display = "none";
             document.getElementById('image-preview').style.display = "none";
@@ -781,3 +802,8 @@ function checkStep8() {
     </script>
 </body>
 </html>
+
+
+
+
+
